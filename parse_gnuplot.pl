@@ -1,4 +1,5 @@
 #! /usr/bin/perl -w
+#A simple code to plotting with gnuplot using perl
 #usage $0 
 
 use strict;
