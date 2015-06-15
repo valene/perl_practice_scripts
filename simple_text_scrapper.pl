@@ -19,7 +19,7 @@ my $texts = $mech->text() or die "Content cannot be displayed as text" ;
 
 foreach (@linksfound) {
   my @urls = split('/', $_->url_abs()); 
-  $urls[2] eq 'www.lua.org' and $visited{$_->url_abs()}++ ;
+  "$urls[2]" eq "$url" and $visited{$_->url_abs()}++ ;
 }
 
 while (1) {
