@@ -25,4 +25,4 @@ my $f=File::Fetch->new(uri=>"$floc") ;
 $rel[0] =~ m/-(\d+.*?\d+)/i and my $relver = $1 ;
 my $v_in = `$pname --version | head -n 1` ;
 $v_in =~ m/(\d+.*?\d+)/i and my $insver = $1;
-$relver < $insver and my $where = $f->fetch(to=>'/tmp') ;
+$relver > $insver and my $where = $f->fetch(to=>'/tmp') ;
