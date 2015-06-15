@@ -7,6 +7,9 @@ use WWW::Mechanize;
 #use WWW::Mechanize::TreeBuilder;
 
 my $url = shift @ARGV ;
+my @nsp = split('/',$url);
+$url =~ /http/ and my $urlbase = $nsp[2] or my $urlbase = $nsp[0]
+#regexp matching might be better?
 my %visited ;
 my %pgdata ;
 my %extracted ;
@@ -19,7 +22,7 @@ my $texts = $mech->text() or die "Content cannot be displayed as text" ;
 
 foreach (@linksfound) {
   my @urls = split('/', $_->url_abs()); 
-  "$urls[2]" eq "$url" and $visited{$_->url_abs()}++ ;
+  "$urls[2]" eq "$urlbase" and $visited{$_->url_abs()}++ ;
 }
 
 while (1) {
