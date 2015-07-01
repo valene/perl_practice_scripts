@@ -8,7 +8,7 @@ use WWW::Mechanize;
 
 my $url = shift @ARGV ;
 my @nsp = split('/',$url);
-$url =~ /http/ and my $urlbase = $nsp[2] or my $urlbase = $nsp[0]
+$url =~ /http/ and local $urlbase = $nsp[2] or local $urlbase = $nsp[0]
 #regexp matching might be better?
 my %visited ;
 my %pgdata ;
@@ -34,7 +34,7 @@ while (1) {
    $extracted{$_} and delete $visited{$_} and next ;
    $mech = WWW::Mechanize->new( agent => 'Nightlord 1.0' );
    $mech->get($_) or next ;
-   0+@linksfound > 0 and @linext = check_links($urlbase,@linksfound);
+   0+@linksfound > 0 and @linext = check_links(@linksfound);
    unless (@linext) {
      foreach my $i2 (@linext) {
        $extracted{$i2} or $visited{$i2}++ ;
@@ -53,12 +53,11 @@ foreach (keys %pgdata) {
 }
 
 sub check_links{
-  my $abs_urlbase = shift @_ ;
   my @temp_links ;
   my @num_links = @_ ;
   foreach (@num_links) {
     my @split_links = split('/' , $_->url_abs());
-    $split_links[2] eq "$abs_urlbase" and push(@temp_links, $_->url_abs());
+    $split_links[2] eq "$urlbase" and push(@temp_links, $_->url_abs());
   }
   0+@temp_links > 0 and return @temp_links or return ;
 }
